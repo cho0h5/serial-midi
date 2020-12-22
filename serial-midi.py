@@ -1,9 +1,16 @@
 import serial
 import pygame.midi
+import serial.tools.list_ports as sl
+
+portList = sl.comports()
+for i in range(len(portList)):
+    print(i + 1, str(portList[i].device))
+index = int(input("Enter port")) - 1
+port = portList[index].device
 
 # Initialize serial
 ser = serial.Serial(
-        port='/dev/cu.usbmodem141301',
+        port=port,
         baudrate=115200,
 )
 
