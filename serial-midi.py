@@ -2,11 +2,22 @@ import serial
 import pygame.midi
 import serial.tools.list_ports as sl
 
-portList = sl.comports()
-for i in range(len(portList)):
-    print(i + 1, str(portList[i].device))
-index = int(input("Enter port")) - 1
-port = portList[index].device
+def getPort():
+    portList = [port.device for port in sl.comports()]
+
+    # Print port List
+    for i in range(len(portList)):
+        print("{}. {}".format(i + 1, str(portList[i])))
+
+    # Choice port
+    numList = [str(x + 1) for x in list(range(len(portList)))]
+    print("Select port [{}] ".format('/'.join(numList)), end="")
+    index = int(input()) - 1
+
+    port = portList[index]
+    return port
+
+port = getPort()
 
 # Initialize serial
 ser = serial.Serial(
